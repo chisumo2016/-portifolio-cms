@@ -1,4 +1,8 @@
 const mix = require('laravel-mix');
+const tailwindcss = require('tailwindcss');
+require('laravel-mix-purgecss');
+
+
 
 /*
  |--------------------------------------------------------------------------
@@ -12,4 +16,16 @@ const mix = require('laravel-mix');
  */
 
 mix.js('resources/js/app.js', 'public/js')
-    .sass('resources/sass/app.scss', 'public/css');
+    .extract(['vue'])
+
+    .sass('resources/sass/app.sass', 'public/css')
+    .options({
+        processCssUrls: false,
+        postCss: [ tailwindcss('./tailwind.config.js') ],
+    })
+    .purgeCss()
+    .browserSync('chisumo-portifolio.application');
+
+if (mix.inProduction()) {
+    mix.version();
+}
