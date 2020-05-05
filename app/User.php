@@ -10,13 +10,14 @@ class User extends Authenticatable
 {
     use Notifiable;
 
+    const ADMIN_ROLE = 'admin';
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'first_name', 'last_name','role','twitter_username','email', 'password',
     ];
 
     /**
@@ -36,4 +37,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    protected  $appends = ['name'];
+
+    public  function  getNameAttribute()
+    {
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }
