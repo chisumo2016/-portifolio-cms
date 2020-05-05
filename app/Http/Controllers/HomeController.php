@@ -23,6 +23,8 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //dd(auth()->user()->posts->toArray());
+        //dd(\App\Post::with('author')->first()->toArray());
         return view('home');
     }
 }

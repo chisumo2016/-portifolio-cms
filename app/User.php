@@ -44,4 +44,9 @@ class User extends Authenticatable
     {
         return $this->first_name . ' ' . $this->last_name;
     }
+
+    public function  posts()
+    {
+        return $this->hasMany(Post::class,'author_id');
+    }
 }
