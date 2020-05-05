@@ -18,8 +18,8 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
-Route::get('/login', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/login', 'Auth\LoginController@login');
+Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('login');
+Route::post('/admin', 'Auth\LoginController@login');
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
