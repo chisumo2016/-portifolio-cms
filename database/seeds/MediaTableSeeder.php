@@ -1,5 +1,6 @@
 <?php
 
+use App\Media;
 use App\Submission;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,6 @@ class MediaTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Submission::class, 10)->create();
+        factory(Media::class, 10)->create();
     }
 }
