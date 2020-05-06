@@ -19,13 +19,22 @@ class Post extends Model
     ];
 
     protected $casts = [
-        'published_on' => 'datetime',
-        'publish_at' => 'datetime',
+        'published_on'  => 'datetime',
+        'publish_at'    => 'datetime',
+        'status'        => 'boolean',
     ];
+
+    protected $table = 'posts';
 
     public function  author()
     {
 
         return $this->hasOne(User::class,'id','author_id');
+    }
+
+    public function  tags()
+    {
+        return $this->belongsToMany(Tag::class,'posts_tags','posts_id','tags_id');
+
     }
 }
