@@ -12,9 +12,22 @@ class Media extends Model
        'link',
        'header_image',
        'status',
+       'slug',
    ];
 
     protected  $casts = [
         'status' => 'boolean'
     ];
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public  function  adminPath()
+    {
+        return '/admin/media/' .  $this->slug;
+    }
+
+
 }

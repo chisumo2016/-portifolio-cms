@@ -18,8 +18,21 @@ Route::get('/', function () {
 });
 
 //Auth::routes();
-Route::get('/admin', 'Auth\LoginController@showLoginForm')->name('login');
-Route::post('/admin', 'Auth\LoginController@login');
+
+Route::prefix('/admin')->group(function (){
+    Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
+    Route::post('/', 'Auth\LoginController@login');
+
+    Route::get('/media','MediaController@index');
+    Route::get('/media/create','MediaController@create');
+    Route::post('/media/create','MediaController@create');
+    Route::get('/media/{media}','MediaController@show');
+    Route::get('/media/{media}/edit','MediaController@edit');
+    Route::patch('/media/{media}/edit','MediaController@update');
+    Route::delete('/media/{media}','MediaController@destroy');
+});
+
+
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');

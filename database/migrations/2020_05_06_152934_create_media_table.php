@@ -19,6 +19,7 @@ class CreateMediaTable extends Migration
             $table->longText('description');
             $table->longText('link');
             $table->longText('header_image');
+            $table->string('slug');
             $table->boolean('status')->default(0);
             $table->timestamps();
         });

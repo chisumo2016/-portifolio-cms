@@ -14,7 +14,8 @@ class MediaController extends Controller
      */
     public function index()
     {
-        //
+        $media = Media::get();
+        return view('media.index', compact('media'));
     }
 
     /**
@@ -24,7 +25,7 @@ class MediaController extends Controller
      */
     public function create()
     {
-        //
+        return view('media.create');
     }
 
     /**
@@ -35,7 +36,18 @@ class MediaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'description'   => 'required',
+            'link'          => 'required',
+            'header_image'  => 'required',
+            'status'        => 'required',
+        ]);
+        $validatedData['slug'] = Str::slug($validatedData['title']);
+
+        $media = Media::create( $validatedData);
+
+        return  redirect($media->adminPath())->with('successd','Media Create');
     }
 
     /**
@@ -46,7 +58,7 @@ class MediaController extends Controller
      */
     public function show(Media $media)
     {
-        //
+        return  view('media.show',compact('media'));
     }
 
     /**
@@ -57,7 +69,7 @@ class MediaController extends Controller
      */
     public function edit(Media $media)
     {
-        //
+        return view('media.edit', compact('media'));
     }
 
     /**
@@ -69,7 +81,16 @@ class MediaController extends Controller
      */
     public function update(Request $request, Media $media)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'description'   => 'required',
+            'link'          => 'required',
+            'header_image'  => 'required',
+            'status'        => 'required',
+        ]);
+
+        $media->update($validatedData);
+        return  redirect($media->adminPath())->with('successd','Media Update');
     }
 
     /**
@@ -80,6 +101,8 @@ class MediaController extends Controller
      */
     public function destroy(Media $media)
     {
-        //
+         $media->delete();
+        return  redirect('/admin/media')->with('successd','Media Deleted');
     }
+
 }
