@@ -32,6 +32,7 @@ Route::prefix('/admin')->group(function (){
     Route::delete('/media/{media}','MediaController@destroy');
 });
 
+Route::post('/contact', 'ContactController@store');
 
 
 Route::post('/logout', 'Auth\LoginController@logout')->name('logout');

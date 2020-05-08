@@ -146,7 +146,6 @@ class MediaTest extends TestCase
         $this->post('/admin/media/create', $media)
             ->assertSessionHasErrors('header_img');
 
-
     }
 
     /***@test **/
