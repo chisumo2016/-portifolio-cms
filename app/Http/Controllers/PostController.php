@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Post::get();
+        return view('media.index', compact('posts'));
     }
 
     /**
@@ -24,7 +32,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -35,7 +43,19 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'description'   => 'required',
+            'content'       => 'required',
+            'header_image'  => 'required',
+            'publish_at'    => 'required',
+            'status'        => 'required',
+        ]);
+        $validatedData['slug'] = Str::slug($validatedData['title']);
+
+        $post = Auth::user()->posts()->create($validatedData);
+        //$media = Post::create( $validatedData);
+        return  redirect($post->adminPath())->with('successd','Post Create');
     }
 
     /**
@@ -46,7 +66,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return  view('posts.show',compact('post'));
     }
 
     /**
@@ -57,7 +77,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
@@ -69,7 +89,20 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'description'   => 'required',
+            'content'       => 'required',
+            'header_image'  => 'required',
+            'publish_at'    => 'required',
+            'status'        => 'required',
+        ]);
+
+        $post->update($validatedData);
+
+        $post = Auth::user()->posts()->create($validatedData);
+
+        return  redirect($post->adminPath())->with('successd','Post Update');
     }
 
     /**
@@ -80,6 +113,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $post->delete();
+        return  redirect('/admin/posts')->with('successd','Post Deleted');
     }
 }

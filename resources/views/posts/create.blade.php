@@ -1,5 +1,5 @@
 @extends('layouts.external')
 
 @section('content')
-        <h2>{{ $post->title }}</h2>
+        <h2> create Post</h2>
 @endsection

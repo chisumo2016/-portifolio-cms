@@ -28,13 +28,21 @@ class Post extends Model
 
     public function  author()
     {
-
         return $this->hasOne(User::class,'id','author_id');
     }
 
     public function  tags()
     {
         return $this->belongsToMany(Tag::class,'posts_tags','posts_id','tags_id');
+    }
 
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public  function  adminPath()
+    {
+        return '/admin/posts/' .  $this->slug;
     }
 }

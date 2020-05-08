@@ -50,7 +50,7 @@ class ContactTest extends TestCase
             ->assertJsonValidationErrors('email');
 
         $submissionData = [
-            'email' => 'aaaaaaaaaaaaaaaa',
+            'email' => 'ccccccc',
             'message' => 'Hallo darling'
         ];
 

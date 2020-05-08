@@ -19,7 +19,8 @@ $factory->define(Post::class, function (Faker $faker) {
         'status'        => 1,
         'published_on'  => now(),
         'publish_at'    => now(),
-        'author_id'     =>factory(User::class)->create()
-
+        'author_id'     =>  function() {
+              return  factory(User::class)->create();
+        }
     ];
 });

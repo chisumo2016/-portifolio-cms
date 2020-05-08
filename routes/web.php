@@ -23,13 +23,20 @@ Route::prefix('/admin')->group(function (){
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('/', 'Auth\LoginController@login');
 
-    Route::get('/media','MediaController@index');
-    Route::get('/media/create','MediaController@create');
-    Route::post('/media/create','MediaController@create');
-    Route::get('/media/{media}','MediaController@show');
-    Route::get('/media/{media}/edit','MediaController@edit');
-    Route::patch('/media/{media}/edit','MediaController@update');
-    Route::delete('/media/{media}','MediaController@destroy');
+
+    Route::prefix('/media')->group(function (){
+
+        Route::get('/',         'MediaController@index');
+        Route::get('/create',   'MediaController@create');
+        Route::post('/create',  'MediaController@create');
+        Route::get('/{medium}',  'MediaController@show');
+        Route::get('/{medium}/edit','MediaController@edit');
+        Route::patch('/{medium}/edit','MediaController@update');
+        Route::delete('/{medium}','MediaController@destroy');
+
+    });
+
+    Route::resource('posts', 'PostController@index');
 });
 
 Route::post('/contact', 'ContactController@store');

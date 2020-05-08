@@ -12,7 +12,6 @@ class MediaController extends Controller
         $this->middleware('auth');
     }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -59,33 +58,33 @@ class MediaController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Media  $media
+     * @param  \App\Media  $medium
      * @return \Illuminate\Http\Response
      */
-    public function show(Media $media)
+    public function show(Media $medium)
     {
-        return  view('media.show',compact('media'));
+        return  view('media.show',compact('medium'));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Media  $media
+     * @param  \App\Media  $medium
      * @return \Illuminate\Http\Response
      */
-    public function edit(Media $media)
+    public function edit(Media $medium)
     {
-        return view('media.edit', compact('media'));
+        return view('media.edit', compact('medium'));
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Media  $media
+     * @param  \App\Media  $medium
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Media $media)
+    public function update(Request $request, Media $medium)
     {
         $validatedData = $request->validate([
             'title'         => 'required',
@@ -95,19 +94,19 @@ class MediaController extends Controller
             'status'        => 'required',
         ]);
 
-        $media->update($validatedData);
-        return  redirect($media->adminPath())->with('successd','Media Update');
+        $medium->update($validatedData);
+        return  redirect($medium->adminPath())->with('successd','Media Update');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Media  $media
+     * @param  \App\Media  $medium
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Media $media)
+    public function destroy(Media $medium)
     {
-         $media->delete();
+        $medium->delete();
         return  redirect('/admin/media')->with('successd','Media Deleted');
     }
 
