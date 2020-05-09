@@ -61,7 +61,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->create();
 
-        $this->get($media->adminPath() . '/edit')  //$this->get('/admin/media/' . $media->slug . '/edit')
+        $this->get($media->adminPath() )  //$this->get('/admin/media/' . $media->slug . '/edit')
               ->assertSee($media->title);
 
     }
@@ -75,7 +75,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHas('success', 'Media Created')
             ->assertRedirect('/admin/media/' . $media['slug']);
 
@@ -94,7 +94,7 @@ class MediaTest extends TestCase
         $updateMedia = factory(Media::class)->raw(['slug' => $media['slug']]);
         unset($updateMedia ['slug']);
 
-        $this->patch($media->adminPath() .'/edit', $updateMedia)
+        $this->patch($media->adminPath() , $updateMedia)
             ->assertSessionHas('success', 'Media  Updated')
             ->assertRedirect($media->adminPath());
 
@@ -129,7 +129,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(['title' => '']); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHasErrors('title');
     }
 
@@ -143,7 +143,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(['header_img' => '']); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHasErrors('header_img');
 
     }
@@ -158,7 +158,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(['description' => '']); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHasErrors('description');
     }
 
@@ -172,7 +172,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(['status' => '']); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHasErrors('status');
     }
 
@@ -186,7 +186,7 @@ class MediaTest extends TestCase
 
         $media = factory(Media::class)->raw(['link' => '']); //casr into array
 
-        $this->post('/admin/media/create', $media)
+        $this->post('/admin/media', $media)
             ->assertSessionHasErrors('link');
     }
 
@@ -199,7 +199,7 @@ class MediaTest extends TestCase
         $media = factory(Media::class)->create();
 
         //Read all media
-        $this->get('/admin/media')->assertStatus(301)
+        $this->get('/admin/media')->assertStatus(302)
             ->assertRedirect('/admin');
 
         //Read Single media
@@ -213,12 +213,12 @@ class MediaTest extends TestCase
             ->assertRedirect('/admin');
 
         //View media edit media
-        $this->patch($media->adminPath() .'/edit')
+        $this->patch($media->adminPath() )
             ->assertStatus(302)
             ->assertRedirect('/admin');
 
         //Create Media
-        $this->post('/admin/media/create', $media->toArray())
+        $this->post('/admin/media/', $media->toArray())
             ->assertStatus(302)
             ->assertRedirect('/admin');
 

@@ -22,21 +22,12 @@ Route::get('/', function () {
 Route::prefix('/admin')->group(function (){
     Route::get('/', 'Auth\LoginController@showLoginForm')->name('login');
     Route::post('/', 'Auth\LoginController@login');
-
-
-    Route::prefix('/media')->group(function (){
-
-        Route::get('/',         'MediaController@index');
-        Route::get('/create',   'MediaController@create');
-        Route::post('/create',  'MediaController@create');
-        Route::get('/{medium}',  'MediaController@show');
-        Route::get('/{medium}/edit','MediaController@edit');
-        Route::patch('/{medium}/edit','MediaController@update');
-        Route::delete('/{medium}','MediaController@destroy');
-
-    });
-
-    Route::resource('posts', 'PostController@index');
+ ;
+    Route::resources([
+        'media' => 'MediaController',
+        'posts' => 'PostsController'
+    ]);
+    //Route::resource('posts', 'PostController@index');
 });
 
 Route::post('/contact', 'ContactController@store');
@@ -49,3 +40,17 @@ Route::post('/password/reset ', 'Auth\ResetPasswordController@reset')->name('pas
 Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+//
+//Route::prefix('/media')->group(function (){
+//
+//    Route::get('/',         'MediaController@index');
+//    Route::get('/create',   'MediaController@create');
+//    Route::post('/create',  'MediaController@create');
+//    Route::get('/{medium}',  'MediaController@show');
+//    Route::get('/{medium}/edit','MediaController@edit');
+//    Route::patch('/{medium}/edit','MediaController@update');
+//    Route::delete('/{medium}','MediaController@destroy');
+//
+//})
