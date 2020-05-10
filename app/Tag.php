@@ -20,4 +20,14 @@ class Tag extends Model
     {
         return $this->belongsToMany(Post::class,'posts_tags','posts_id','tags_id');
     }
+
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+
+    public  function  adminPath()
+    {
+        return '/admin/tags/' .  $this->slug;
+    }
 }

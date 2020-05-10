@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class TagController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +21,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        //
+        $posts = Tag::get();
+
+        return view('tags.index', compact('posts'));
     }
 
     /**
@@ -24,7 +33,7 @@ class TagController extends Controller
      */
     public function create()
     {
-        //
+        return view('tags.create');
     }
 
     /**
@@ -35,7 +44,14 @@ class TagController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'status'        => 'required',
+        ]);
+        $validatedData['slug'] = Str::slug($validatedData['title']);
+
+        $tag = Tag::create($validatedData);   //$media = Post::create( $validatedData);
+        return  redirect($tag->adminPath())->with('successd','Tag Create');
     }
 
     /**
@@ -46,7 +62,7 @@ class TagController extends Controller
      */
     public function show(Tag $tag)
     {
-        //
+        return  view('tags.show',compact('tag'));
     }
 
     /**
@@ -57,7 +73,7 @@ class TagController extends Controller
      */
     public function edit(Tag $tag)
     {
-        //
+        return view('tags.edit', compact('tag'));
     }
 
     /**
@@ -69,7 +85,14 @@ class TagController extends Controller
      */
     public function update(Request $request, Tag $tag)
     {
-        //
+        $validatedData = $request->validate([
+            'title'         => 'required',
+            'status'        => 'required',
+        ]);
+
+        $tag->update($validatedData);
+
+        return  redirect($tag->adminPath())->with('successd','Tags Update');
     }
 
     /**
@@ -80,6 +103,7 @@ class TagController extends Controller
      */
     public function destroy(Tag $tag)
     {
-        //
+        $tag->delete();
+        return  redirect('/admin/tags')->with('success','Tag Deleted');
     }
 }

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class PostsTest extends TestCase
+class PostTest extends TestCase
 {
     use  RefreshDatabase;
 
@@ -49,7 +49,8 @@ class PostsTest extends TestCase
         $this->$this->actingAs(factory(User::class)->create());
 
         $this->get('/admin/posts/create')
-            ->assertStatus(200);
+            ->assertStatus(200)
+            ->assertViewIs('posts.create');
     }
 
     /**@test */

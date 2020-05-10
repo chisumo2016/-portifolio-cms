@@ -25,24 +25,24 @@ Route::prefix('/admin')->group(function (){
  ;
     Route::resources([
         'media' => 'MediaController',
-        'posts' => 'PostsController'
+        'posts' => 'PostController',
+        'tags' => 'TagController',
     ]);
-    //Route::resource('posts', 'PostController@index');
 });
 
 Route::post('/contact', 'ContactController@store');
 
+Route::post('/logout',                  'Auth\LoginController@logout')->name('logout');
+Route::post('/password/email',          'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('/password/reset ',          'Auth\ResetPasswordController@showResetForm')->name('password.request');
+Route::post('/password/reset ',         'Auth\ResetPasswordController@reset')->name('password.update');
+Route::get('/password/reset/{token}',   'Auth\ResetPasswordController@showResetForm')->name('password.reset');
 
-Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
-Route::post('/password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-Route::get('/password/reset ', 'Auth\ResetPasswordController@showResetForm')->name('password.request');
-Route::post('/password/reset ', 'Auth\ResetPasswordController@reset')->name('password.update');
-Route::get('/password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home',                     'HomeController@index')->name('home');
 
 
 //
+//Route::resource('posts', 'PostController@index');
 //Route::prefix('/media')->group(function (){
 //
 //    Route::get('/',         'MediaController@index');

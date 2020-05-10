@@ -49,7 +49,8 @@ class MediaTest extends TestCase
         $this->$this->actingAs(factory(User::class)->create());
 
          $this->get('/admin/media/create')
-            ->assertStatus(200);
+             ->assertStatus(200)
+             ->assertViewIs('media.create');
     }
 
     /***@test **/
@@ -62,7 +63,7 @@ class MediaTest extends TestCase
         $media = factory(Media::class)->create();
 
         $this->get($media->adminPath() )  //$this->get('/admin/media/' . $media->slug . '/edit')
-              ->assertSee($media->title);
+               ->assertSee($media->title);
 
     }
 
