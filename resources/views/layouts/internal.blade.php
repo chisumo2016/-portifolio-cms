@@ -21,6 +21,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/easymde/dist/easymde.min.css">
+    <script src="https://unpkg.com/easymde/dist/easymde.min.js"></script>
+
 </head>
 <body>
 <div id="app" class="flex flex-col md:flex-row font-primary">
@@ -45,6 +49,13 @@
         @yield('content')
     </main>
 </div>
+<script>
+    new EasyMDE({
+        autoDownloadFontAwesome: false,
+        element: document.getElementById('mde-demo'),
+        initialValue: '{{ $post->content }}'
+    });
+</script>
 
 </body>
 </html>

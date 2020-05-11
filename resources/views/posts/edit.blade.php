@@ -2,7 +2,10 @@
 
 @section('content')
     <section class="bg-white shadow-lg rounded px-8  py-6">
-        <h2 class="text-4xl text-gray-900 font-bold mb-8">Edit  Post</h2>
+        <div class="flex justify-between mb-8">
+            <h2 class="text-4xl text-gray-900 font-bold mb-8 mb-0">Edit  Post</h2>
+            <button type="submit" class="text-xl bg-red-600 hover:bg-blue-700 transition-sm text-white rounded px-2 py-2 shadow-lg">Delete</button>
+        </div>
          <div>
              <form action="{{ route('posts.update', $post) }}" method="POST">
                  @method('patch')
@@ -23,7 +26,7 @@
 
                  <div class="flex flex-col mb-8">
                      <label for="content"  class="text-base uppercase text-gray-600 mb-2 font-bold">Content</label>
-                     <textarea name="content" id="" cols="30" rows="10">{{ $post->content }}</textarea>
+                     <textarea name="content" id="my-text-area" cols="30" rows="10">{{ $post->content }}</textarea>
 
                  </div>
 

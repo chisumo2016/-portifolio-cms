@@ -23,7 +23,6 @@ class CreatePostsTable extends Migration
             $table->string('slug');
             $table->longText('header_img');
             $table->boolean('status')->default(0);
-
             $table->dateTime('published_on')->nullable();
             //$table->dateTime('publish_at');
 
