@@ -41,6 +41,6 @@ class Post extends Model
 
     public  function  adminPath()
     {
-        return '/admin/posts/' .  $this->slug;
+        return '/admin/posts/'.  $this->slug;
     }
 }

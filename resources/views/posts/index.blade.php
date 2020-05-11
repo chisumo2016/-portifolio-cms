@@ -27,7 +27,7 @@
                         </td>
                         <td class="text-right py-2">
                             <a href="/blog/post/{{ $post->slug }}" class="text-blue-600   hover:text-blue-800 transition-sm  mr-2 ">View</a>
-                            <a href="{{ $post->adminPath() }}"      class="text-blue-600  hover:text-blue-800 transition-sm">Edit</a>
+                            <a href="{{ $post->adminPath() }}/edit"      class="text-blue-600  hover:text-blue-800 transition-sm">Edit</a>
                         </td>
                     </tr>
                 @endforeach

@@ -114,7 +114,7 @@ class PostTest extends TestCase
 
             $this->patch($post->adminPath(), $updatePost)
                 ->assertSessionHas('success', 'Post  Updated')
-                ->assertRedirect($post->adminPath());
+                ->assertRedirect($post->adminPath() .'/edit');
 
         $this->assertDatabaseHas('posts',   $updatePost);
         $this->assertDatabaseMissing('posts', $post->toArray());
@@ -223,7 +223,7 @@ class PostTest extends TestCase
 
 
         $this->post('/admin/posts', $post)
-            ->assertSessionHasErrors('content');
+            ->assertSessionHasErrors('header_img');
     }
 
     /**@test */

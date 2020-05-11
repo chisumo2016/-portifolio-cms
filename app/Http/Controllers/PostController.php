@@ -49,7 +49,7 @@ class PostController extends Controller
             'title'         => 'required',
             'description'   => 'required',
             'content'       => 'required',
-            'header_image'  => 'required',
+            'header_img'    => 'required',
             'status'        => 'required',
         ]);
         $validatedData['slug'] = Str::slug($validatedData['title']);
@@ -90,19 +90,20 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+
         $validatedData = $request->validate([
             'title'         => 'required',
             'description'   => 'required',
             'content'       => 'required',
-            'header_image'  => 'required',
+            'header_img'    => 'required',
             'status'        => 'required',
         ]);
 
         $post->update($validatedData);
 
-        $post = Auth::user()->posts()->create($validatedData);
+       // $post = Auth::user()->posts()->create($validatedData);
 
-        return  redirect($post->adminPath())->with('successd','Post Update');
+        return  redirect($post->adminPath(). '/edit')->with('success','Post Update');
     }
 
     /**
