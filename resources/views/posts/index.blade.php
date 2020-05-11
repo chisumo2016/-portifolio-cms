@@ -1,8 +1,8 @@
 @extends('layouts.internal')
 
 @section('content')
-    <section class="bg-white shadow-lg rounded p-6 ">
-        <h1 class="text-4xl text-gray-900 font-bold mb-8">Blog Post</h1>
+    <section class="bg-white shadow-lg rounded px-8  py-6">
+        <h2 class="text-4xl text-gray-900 font-bold mb-8">Blog Post</h2>
         <div class="overflow-x-auto">
             <table class="w-full min-w-lg">
                 <thead >
@@ -26,8 +26,8 @@
                             {{ \Carbon\Carbon::parse($post->published_on)->toFormattedDateString() }}
                         </td>
                         <td class="text-right py-2">
-                            <a href="/blog/post/{{ $post->slug }}" class="text-blue-600 hover:text-blue-800 transition-sm  mr-2 ">View</a>
-                            <a href="{{ $post->adminPath() }}" class="text-blue-600  hover:text-blue-800 transition-sm">Edit</a>
+                            <a href="/blog/post/{{ $post->slug }}" class="text-blue-600   hover:text-blue-800 transition-sm  mr-2 ">View</a>
+                            <a href="{{ $post->adminPath() }}"      class="text-blue-600  hover:text-blue-800 transition-sm">Edit</a>
                         </td>
                     </tr>
                 @endforeach
