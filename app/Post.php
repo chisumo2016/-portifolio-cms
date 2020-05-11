@@ -15,12 +15,10 @@ class Post extends Model
         'header_img',
         'status',
         'published_on',
-        'publish_at',
     ];
 
     protected $casts = [
         'published_on'  => 'datetime',
-        'publish_at'    => 'datetime',
         'status'        => 'boolean',
     ];
 

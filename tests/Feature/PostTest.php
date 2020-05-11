@@ -22,10 +22,11 @@ class PostTest extends TestCase
         $this->$this->actingAs(factory(User::class)->create());
 
         $post = factory(Post::class,2)->create();
-
+         $title1 = \Str::limit($post[0]['title'],  40, '....');
+         $title2 = \Str::limit($post[0]['title'],  40, '....');
         $this->get('/admin/media')
-            ->assertSee($post[0]['title'])
-            ->assertSee($post[1]['title']);
+            ->assertSee($title1)
+            ->assertSee($title2);
     }
 
     /**@test */
@@ -267,24 +268,6 @@ class PostTest extends TestCase
             ->assertSessionHasErrors('description');
     }
 
-    /**@test */
-    public function post_requires_a_publish_at()
-    {
-        $this->withExceptionHandling();
-
-        $user = factory(User::class)->create();
-
-        $this->$this->actingAs($user);
-
-        $post = factory(Post::class)->raw([
-            'author_id'       =>  $user->id,
-            'published_on'    =>   null,
-            'status'           =>   null
-        ]);
-
-        $this->post('/admin/posts', $post)
-            ->assertSessionHasErrors('status');
-    }
 
     /**@test */
     public function post_requires_a_status()
@@ -312,6 +295,24 @@ class PostTest extends TestCase
 
 
 
+//    /**@test */
+//    public function post_requires_a_publish_at()
+//    {
+//        $this->withExceptionHandling();
+//
+//        $user = factory(User::class)->create();
+//
+//        $this->$this->actingAs($user);
+//
+//        $post = factory(Post::class)->raw([
+//            'author_id'       =>  $user->id,
+//            'published_on'    =>   null,
+//            'status'           =>   null
+//        ]);
+//
+//        $this->post('/admin/posts', $post)
+//            ->assertSessionHasErrors('status');
+//    }
 
 
 

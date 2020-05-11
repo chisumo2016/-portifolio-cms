@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -21,8 +22,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        //dd(Route::currentRouteName());
         $posts = Post::get();
-        return view('media.index', compact('posts'));
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -48,7 +50,6 @@ class PostController extends Controller
             'description'   => 'required',
             'content'       => 'required',
             'header_image'  => 'required',
-            'publish_at'    => 'required',
             'status'        => 'required',
         ]);
         $validatedData['slug'] = Str::slug($validatedData['title']);
@@ -94,7 +95,6 @@ class PostController extends Controller
             'description'   => 'required',
             'content'       => 'required',
             'header_image'  => 'required',
-            'publish_at'    => 'required',
             'status'        => 'required',
         ]);
 

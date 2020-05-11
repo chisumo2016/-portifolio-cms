@@ -18,7 +18,7 @@ $factory->define(Post::class, function (Faker $faker) {
         'header_img'    => $faker->imageUrl(),
         'status'        => 1,
         'published_on'  => now(),
-        'publish_at'    => now(),
+//        'publish_at'    => now(),
         'author_id'     =>  function() {
               return  factory(User::class)->create();
         }

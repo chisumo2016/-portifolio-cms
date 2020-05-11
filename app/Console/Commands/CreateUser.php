@@ -39,16 +39,16 @@ class CreateUser extends Command
      */
     public function handle()
     {
-        $first_name = $this->ask("What is the user\'s       first name?");
-        $last_name = $this->ask("What is the user\'s       last name?");
-        $email = $this->ask("What is the user\'s       email ?");
-        $twitter_handle = $this->ask("What is the user\'s   twitter username ?");
+        $first_name         = $this->ask("What is the user\'s       first name?");
+        $last_name          = $this->ask("What is the user\'s       last name?");
+        $email              = $this->ask("What is the user\'s       email ?");
+        $twitter_username    = $this->ask("What is the user\'s   twitter username ?");
 
         $password = $this->secret("What is the user\'s   password ?");
         $passwordConfirm = $this->secret("Please Confirm  the user\'s   password ?");
 
         if ($password != $passwordConfirm) {
-            return $this->error('Passwords do not match');
+            return $this->error('Password do not match');
         }
         $this->table([
             'First Name',
@@ -61,7 +61,7 @@ class CreateUser extends Command
                     $first_name,
                     $last_name,
                     $email,
-                    $twitter_handle
+                    $twitter_username
                 ]
             ]);
         if ($this->confirm("Does everything look right ?")) {
@@ -69,12 +69,12 @@ class CreateUser extends Command
                 'first_name' => $first_name,
                 'last_name' => $last_name,
                 'email' => $email,
-                'twitter_handle' => $twitter_handle,
+                'twitter_username' => $twitter_username,
                 'password' => Hash::make($password),
                 'role' => User::ADMIN_ROLE,
 
             ]);
-            
+
             return $this->info("User created");
         }
             return $this->info("User not created");

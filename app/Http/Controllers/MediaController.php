@@ -20,6 +20,7 @@ class MediaController extends Controller
     public function index()
     {
         $media = Media::get();
+
         return view('media.index', compact('media'));
     }
 

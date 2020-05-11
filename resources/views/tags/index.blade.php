@@ -1,4 +1,4 @@
-@extends('layouts.external')
+@extends('layouts.internal')
 
 @section('content')
     @foreach( $tags as $tag)

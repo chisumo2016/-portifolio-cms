@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
          $this->call(UsersTableSeeder::class);
          $this->call(PostsTableSeeder::class);
          $this->call(TagsTableSeeder::class);
-         $this->call(SubmissionsTableSeeder::class);
          $this->call(MediaTableSeeder::class);
 
          //TODO join tags and posts

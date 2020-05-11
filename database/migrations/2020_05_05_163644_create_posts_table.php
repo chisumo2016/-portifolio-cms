@@ -25,7 +25,7 @@ class CreatePostsTable extends Migration
             $table->boolean('status')->default(0);
 
             $table->dateTime('published_on')->nullable();
-            $table->dateTime('publish_at');
+            //$table->dateTime('publish_at');
 
             //$table->foreign('author_id')->references('id')->on('users')->onDelete('cascade');
 
