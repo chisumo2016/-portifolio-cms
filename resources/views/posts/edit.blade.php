@@ -25,8 +25,11 @@
                  </div>
 
                  <div class="flex flex-col mb-8">
-                     <label for="content"  class="text-base uppercase text-gray-600 mb-2 font-bold">Content</label>
-                     <textarea name="content" id="my-text-area" cols="30" rows="10">{{ $post->content }}</textarea>
+                     <div class="flex justify-between mb-2">
+                         <label for="content"  class="text-base uppercase text-gray-600 mb-2 font-bold">Content</label>
+                         <small class="capitalize text-gray-600  text-sm">This field support markdown content</small>
+                     </div>
+                     <textarea  class="h-4" name="content" id="my-text-area" cols="30" rows="10">{{ $post->content }}</textarea>
 
                  </div>
 
