@@ -50,11 +50,7 @@
     </main>
 </div>
 <script>
-    new EasyMDE({
-        autoDownloadFontAwesome: false,
-        element: document.getElementById('mde-demo'),
-        initialValue: '{{ $post->content }}'
-    });
+   
 </script>
 
 </body>

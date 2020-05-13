@@ -21,9 +21,9 @@ class TagController extends Controller
      */
     public function index()
     {
-        $posts = Tag::get();
+        $tags = Tag::get();
 
-        return view('tags.index', compact('posts'));
+        return view('tags.index', compact('tags'));
     }
 
     /**

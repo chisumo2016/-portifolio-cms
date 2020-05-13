@@ -1,6 +1,11 @@
 @extends('layouts.internal')
 
 @section('content')
+    <nav class="mb-12">
+        <a href="{{ route('posts.index') }}" class="text-2xl  mr-6 pb-2 border-b-2 border-bg-blue-600  transition  text-blue-700 font-bold">Post</a>
+        <a href="#" class="text-2xl  mr-6 pb-2 border-b-2 border-transparent transition  hover:text-gray-900 text-gray-700 font-light">Images</a>
+        <a href="{{ route('tags.index') }}" class="text-2xl  mr-6 pb-2 border-b-2 border-transparent transition  hover:text-gray-900 text-gray-700 font-light">Tags</a>
+    </nav>
     <section class="bg-white shadow-lg rounded px-8  py-6">
         <h2 class="text-4xl text-gray-900 font-bold mb-8">Blog Post</h2>
         <div class="overflow-x-auto">
