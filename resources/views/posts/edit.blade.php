@@ -46,6 +46,15 @@
                      </div>
                  </div>
 
+                 <div class="flex flex-col mb-8">
+                     <label for="tags" class="text-base uppercase text-gray-600 mb-2 font-bold"> Tags</label>
+                     <select name="tags[]" id="tags" multiple class="h-64 ">
+                         @foreach($tags as $tag)
+                             <option value="{{ $tag['id']}}" {{  $post['tags']->contains($tag) ? 'selected' : ''}} class="capitalize ">{{$tag->title}}</option>
+                         @endforeach
+                     </select>
+                 </div>
+
                  <div class="flex justify-between items-center">
                      <button type="submit" class="text-xl bg-blue-600 hover:bg-blue-700 transition-sm text-white rounded px-3 py-3 shadow-lg mr-4">Save</button>
                      <a href="{{ route('posts.index') }}" class="text-xl text-red-400 text-white rounded px-3 py-3 shadow-lg hover:text-gray-700">Cancel</a>

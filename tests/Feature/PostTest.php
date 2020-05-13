@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Media;
 use App\Post;
+use App\Tag;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -21,9 +22,9 @@ class PostTest extends TestCase
 
         $this->$this->actingAs(factory(User::class)->create());
 
-        $post = factory(Post::class,2)->create();
-         $title1 = \Str::limit($post[0]['title'],  40, '....');
-         $title2 = \Str::limit($post[0]['title'],  40, '....');
+        $post = factory(Post::class, 2)->create();
+        $title1 = \Str::limit($post[0]['title'], 40, '....');
+        $title2 = \Str::limit($post[0]['title'], 40, '....');
         $this->get('/admin/media')
             ->assertSee($title1)
             ->assertSee($title2);
@@ -64,7 +65,7 @@ class PostTest extends TestCase
         $post = factory(Post::class)->create();
 
         $this->get($post->adminPath() . '/edit')  //$this->get('/admin/media/' . $media->slug . '/edit')
-            ->assertSee($post->title);
+        ->assertSee($post->title);
 
     }
 
@@ -80,8 +81,8 @@ class PostTest extends TestCase
         $this->$this->actingAs($user);
 
         $post = factory(Post::class)->raw([
-            'author_id'       =>  $user->id,
-            'published_on'    =>   null
+            'author_id' => $user->id,
+            'published_on' => null
         ]);
 
         $this->post('/admin/posts', $post)
@@ -101,23 +102,124 @@ class PostTest extends TestCase
         $this->$this->actingAs($user);
 
         $post = factory(Post::class)->raw([
-            'author_id'       =>  $user->id,
-            'published_on'    =>   null
+            'author_id' => $user->id,
+            'published_on' => null
         ]); //casr into array
 
         $updatePost = factory(Post::class)->raw([
-            'author_id'       =>  $user->id,
-            'published_on'    =>   null
+            'author_id' => $user->id,
+            'published_on' => null
         ]); //cast into array
 
-            unset($updatePost ['slug']);
+        unset($updatePost ['slug']);
 
-            $this->patch($post->adminPath(), $updatePost)
-                ->assertSessionHas('success', 'Post  Updated')
-                ->assertRedirect($post->adminPath() .'/edit');
+        $this->patch($post->adminPath(), $updatePost)
+            ->assertSessionHas('success', 'Post  Updated')
+            ->assertRedirect($post->adminPath() . '/edit');
 
-        $this->assertDatabaseHas('posts',   $updatePost);
+        $this->assertDatabaseHas('posts', $updatePost);
         $this->assertDatabaseMissing('posts', $post->toArray());
+    }
+
+        /**@test */
+    public function user_can_add_tags_when_updating_a_post()
+    {
+        $this->withExceptionHandling();
+
+        $this->$this->actingAs($user = factory(User::class)->create());
+
+        $tag = factory(Tag::class)->create();
+
+        $post = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]); //casr into array
+
+        $updatePost = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]); //cast into array
+
+        $updatePost['tags'] = [$tag->id];
+
+        unset($updatePost ['slug']);
+
+        $this->patch($post->adminPath(), $updatePost)
+            ->assertSessionHas('success', 'Post  Updated')
+            ->assertRedirect($post->adminPath() . '/edit');
+
+        //Make sure the relationship was created , Get Relationship , Assert if matches our expectations    dd($finalPost)->toArray()
+        $finalPost = Post::with('tags')->find($post['id']);
+        $this->assertCount(1, $finalPost->tags);
+
+
+    }
+
+    /**@test */
+    public function user_can_remove_tags_when_updating_a_post()
+    {
+        $this->withExceptionHandling();
+
+        $this->$this->actingAs($user = factory(User::class)->create());
+
+        $tag = factory(Tag::class)->create();
+
+        $post = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]);
+
+        $post->tags()->attach([$tag->id]);
+
+        $updatePost = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]); //cast into array
+
+        unset($updatePost ['slug']);
+
+        $this->patch($post->adminPath(), $updatePost)
+            ->assertSessionHas('success', 'Post  Updated')
+            ->assertRedirect($post->adminPath() . '/edit');
+
+        //Make sure the relationship was created , Get Relationship , Assert if matches our expectations    dd($finalPost)->toArray()
+        $finalPost = Post::with('tags')->find($post['id']);
+        $this->assertCount(0, $finalPost->tags);
+
+    }
+
+    /**@test */
+    public function user_can_remove_all_tags_when_updating_a_post()
+    {
+        $this->withExceptionHandling();
+
+        $this->$this->actingAs($user = factory(User::class)->create());
+
+        $tags = factory(Tag::class,3)->create();
+
+        $post = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]);
+
+        $post->tags()->attach([$tags->pluck('id')]);
+
+        $updatePost = factory(Post::class)->raw([
+            'author_id' => $user->id,
+            'published_on' => null
+        ]); //cast into array
+
+        unset($updatePost ['slug']);
+
+        $this->patch($post->adminPath(), $updatePost)
+            ->assertSessionHas('success', 'Post  Updated')
+            ->assertRedirect($post->adminPath() . '/edit');
+
+        //Make sure the relationship was created , Get Relationship , Assert if matches our expectations    dd($finalPost)->toArray()
+        $finalPost = Post::with('tags')->find($post['id']);
+        $this->assertCount(0, $finalPost->tags);
+
+
     }
 
     /**@test */
@@ -289,6 +391,25 @@ class PostTest extends TestCase
         $this->post('/admin/posts', $post)
             ->assertSessionHasErrors('status');
     }
+
+//    /**@test */
+//    public function post_requires_tags_array()
+//    {
+//        $this->withExceptionHandling();
+//
+//        $this->$this->actingAs($user = factory(User::class)->create());
+//
+//        $post = factory(Post::class)->raw([
+//            'author_id'       =>  $user->id,
+//        ]);
+//
+//        $post['tags'] = [];
+//
+//        $post = factory(Post::class)->raw(['status' => '']); //casr into array
+//
+//        $this->post('/admin/posts', $post)
+//            ->assertSessionHasErrors('tags');
+//    }
 
 
 

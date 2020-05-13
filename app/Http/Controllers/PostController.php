@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -78,7 +79,11 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+       $post->load('tags');
+        $tags = Tag::get();
+
+        //dd($post->toArray(), $tags->toArray());
+        return view('posts.edit', compact('post', 'tags'));
     }
 
     /**
@@ -97,13 +102,21 @@ class PostController extends Controller
             'content'       => 'required',
             'header_img'    => 'required',
             'status'        => 'required',
+            'tags'         =>   'array',
         ]);
 
         $post->update($validatedData);
+        // Add the tags
+       if (isset($validatedData['tags'])){
+           $post->tags()->sync($validatedData['tags']);
+       }else{
+           $post->tags()->detach();
+       }
+        return  redirect($post->adminPath(). '/edit')->with('success','Post Update');
 
+       //dd($post->fresh()->load('tags')->toArray());
        // $post = Auth::user()->posts()->create($validatedData);
 
-        return  redirect($post->adminPath(). '/edit')->with('success','Post Update');
     }
 
     /**

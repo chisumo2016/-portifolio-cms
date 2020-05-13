@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
 
         $posts = Post::all();
 
-        Tag::get()->each(function ($tag)  use ($posts){
+        Tag::take(3)->get()->each(function ($tag)  use ($posts){
             $tag->posts()->attach($posts->pluck('id'));
           });
     }
