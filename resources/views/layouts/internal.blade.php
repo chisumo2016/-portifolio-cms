@@ -27,16 +27,16 @@
 
 </head>
 <body>
-<div id="app" class="flex flex-col md:flex-row font-primary">
-    <nav  class="w-full  md:w-1/5 py-4 md:min-w-sm md:max-w-sm">
-          <div class="hidden md:flex flex-col items-center py-8">
+<div id="app" class="flex flex-col lg:flex-row font-primary">
+    <nav  class="w-full  lg:w-1/5 py-4 lg:min-w-xs mx-auto lg:mx-0 max-w-2xl lg:max-w-sm ">
+          <div class="hidden lg:flex flex-col items-center py-8">
               <img src="https://www.gravatar.com/avatar/{{md5(Auth::user()->email)}}" alt="user profile image" class="rounded-full w-24 h-24 mb-2">
               <label for="" class="text-xl text-gray-800">{{ Auth::user()->name }}</label>
           </div>
-        <div class="flex md:flex-col justify-between px-4 md:px-12">
-            <a href="/admin/posts"  class="text-lg md:text-2xl md:mb-6 hover:text-gray-900 hover:font-bold  transition-sm {{ Route::currentRouteName()  === 'posts.index' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Blog</a>
-            <a href="/admin/media"  class="text-lg md:text-2xl   md:mb-6 hover:text-gray-900 hover:font-bold transition-sm {{ Route::currentRouteName()  === 'media.index' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Media</a>
-            <a href="/admin/profile" class="text-lg md:text-2xl  md:mb-6 hover:text-gray-900 hover:font-bold transition-sm {{ Route::currentRouteName()  === 'profile' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Profile</a>
+        <div class="flex lg:flex-col justify-between px-4 lg:px-12">
+            <a href="/admin/posts"  class="text-lg md:text-2xl   lg:mb-6 hover:text-gray-900 hover:font-bold  transition-sm {{ Route::currentRouteName()  === 'posts.index' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Blog</a>
+            <a href="/admin/media"  class="text-lg md:text-2xl   lg:mb-6 hover:text-gray-900 hover:font-bold transition-sm {{ Route::currentRouteName()  === 'media.index' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Media</a>
+            <a href="/admin/profile" class="text-lg md:text-2xl  lg:mb-6 hover:text-gray-900 hover:font-bold transition-sm {{ Route::currentRouteName()  === 'profile' ?  'text-gray-900  font-bold ' :  'text-gray-700 ' }}">Profile</a>
             <a  href="{{ route('logout') }}" class="text-lg md:text-2xl text-gray-700 md:mb-6 hover:text-gray-900 hover:font-bold transition-sm" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                 logout
             </a>
@@ -45,7 +45,7 @@
             </form>
         </div>
     </nav>
-    <main class=" bg-gray-100 min-h-screen  w-full md:w-4/5 py-8">
+    <main class=" bg-gray-100 min-h-screen  w-full lg:w-4/5 py-8">
         @yield('content')
     </main>
 </div>
