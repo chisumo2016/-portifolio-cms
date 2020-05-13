@@ -2,11 +2,19 @@
 
 @section('content')
     <section class="bg-white shadow-lg rounded px-8  py-6">
-        <div class="flex justify-between mb-8">
+        <div class="flex justify-between items-center mb-8">
             <h2 class="text-4xl text-gray-900 font-bold mb-8 mb-0">Edit  Post</h2>
-            <button type="submit" class="text-xl bg-red-600 hover:bg-blue-700 transition-sm text-white rounded px-2 py-2 shadow-lg">Delete</button>
-        </div>
-         <div>
+            <a  href="{{ route('posts.destroy', $post) }}" class="text-xl bg-red-600 hover:bg-blue-700 transition-sm text-white rounded px-3 py-2 shadow-lg" onclick="event.preventDefault();
+                    confirm('Are you want to delete this post ? ') ? document.getElementById('delete-form').submit() : null">
+                Delete
+            </a>
+            <form id="delete-form" action="{{ route('posts.destroy', $post) }}" method="POST" style="display: none;">
+                @method('DELETE')
+                @csrf
+            </form>
+{{--            <button type="submit" class="text-xl bg-red-600 hover:bg-blue-700 transition-sm text-white rounded px-3 py-2 shadow-lg">Delete</button>--}}
+         </div>
+        <div>
              <form action="{{ route('posts.update', $post) }}" method="POST">
                  @method('patch')
                 @csrf
